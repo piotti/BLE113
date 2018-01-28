@@ -1,8 +1,11 @@
 from Tkinter import *
 import tkMessageBox as messagebox
 import client
+from db import Database
 
-DEFAULT_PORT = 'COM5'
+DEFAULT_PORT = 'COM19'
+
+DB = Database()
 
 
 class CharacteristicDisplay:
@@ -43,6 +46,10 @@ class CharacteristicDisplay:
 
     def send_button_cb(self):
         txt = self.text_field.get()
+        if self.char.type == 'int':
+            txt = hex(txt)[2:]
+        elif self.char.type == 'text':
+            txt = ''.join([hex(ord(e))[2:] for e in txt])
         txt = client.hex_to_string(txt)
         print 'sending', txt
         self.reactor_display.connection.connection.write_by_handle(self.char.handle+1, txt)
