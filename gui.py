@@ -47,7 +47,7 @@ class CharacteristicDisplay:
     def send_button_cb(self):
         txt = self.text_field.get()
         if self.char.type == 'int':
-            txt = hex(txt)[2:]
+            txt = hex(int(txt))[2:]
         elif self.char.type == 'text':
             txt = ''.join([hex(ord(e))[2:] for e in txt])
         txt = client.hex_to_string(txt)
@@ -235,5 +235,3 @@ if __name__ == '__main__':
     root = Tk()
     my_gui = MainWindow(root)
     root.mainloop()
-
-

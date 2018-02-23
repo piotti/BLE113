@@ -12,6 +12,8 @@ PORT='COM5'
 PSOCS = {
     'PSoC 00392': '00a050e17c5f',
     'PSoC 00795': '00a050a47a8d',
+    'PSOC 00759': '00a050a479cb',
+	'PSOC 00378': '00a050e1745d',
 }
 
 CHARACTERISTICS = {
