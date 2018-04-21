@@ -58,6 +58,12 @@ def hex_to_string(txt):
     return s
 
 
+class Target:
+    def __init__(self, sender):
+        self.sender = sender
+        self.address_type = 0
+
+
 class Dongle(BlueGigaClient):
     def __init__(self, port):
         super(Dongle, self).__init__(port=port, baud=115200, timeout=0.1)
@@ -73,7 +79,7 @@ class Dongle(BlueGigaClient):
 
     def connect_to_reactor(self, psoc):
         # Scan for psoc
-        responses = self.scan_all(timeout=4)
+        responses = self.scan_all(timeout=10)
         target = None
         for resp in responses:
             if ble_decode(resp.get_sender_address()) == PSOCS[psoc]:
@@ -85,6 +91,8 @@ class Dongle(BlueGigaClient):
 
         # Create new conenction
         connection = self.connect(target=target)
+        print 'TARGET PARAMS'
+        print repr(target.sender), repr(target.address_type)
         rc = ReactorConnection(connection)
 
         # Add to table of connections
@@ -176,8 +184,6 @@ def connect():
 
 def get_services(gui, connection):
 
-   
-
     for service in connection.get_services():
         print ble_decode(service.uuid)
         service.uuid_formed = ble_decode(service.uuid)
@@ -208,11 +214,6 @@ def get_services(gui, connection):
 
 if __name__ == '__main__':
     connect(None)
-
-
-
-
-
 
 
 
